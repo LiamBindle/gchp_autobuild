@@ -1,0 +1,100 @@
+diff --git a/Shared/Config/ESMA_base.mk b/Shared/Config/ESMA_base.mk
+index 99a9ffe..360bd4d 100644
+--- a/Shared/Config/ESMA_base.mk
++++ b/Shared/Config/ESMA_base.mk
+@@ -151,11 +151,8 @@ LIB_SYS =
+ #
+ # Always assume we are using netCDF-4.  Take the include & link
+ # directory paths as computed from the Makefile_header.mk.
+-INC_NETCDF :=$(GC_INCLUDE)
+-ifdef GC_F_INCLUDE
+-   INC_NETCDF +=$(GC_F_INCLUDE)
+-endif
+-LIB_NETCDF :=$(NCL)
++INC_NETCDF :=$(shell nc-config --includedir) $(shell nf-config --includedir)
++LIB_NETCDF :=$(shell nc-config --flibs)
+ #------------------------------------------------------------------------------
+ 
+ ###############################################################################
+@@ -201,9 +198,9 @@ DEF_SDF += $(D)H5_HAVE_PARALLEL
+ #------------------------------------------------------------------------------
+ 
+ DIR_ESMF := $(ESMF_DIR)
+-INC_ESMF := $(DIR_ESMF)/$(ARCH)/include/ 
+-MOD_ESMF := $(DIR_ESMF)/$(ARCH)/mod/
+-LIB_ESMF := $(DIR_ESMF)/$(ARCH)/lib/libesmf.so
++INC_ESMF := $(ESMADIR)/Linux/include/ 
++MOD_ESMF := $(ESMADIR)/Linux/mod/
++LIB_ESMF := $(ESMADIR)/Linux/lib/libesmf.so
+ 
+ ###############################################################################
+ # %%%%% COMMENTED OUT BY BOB Y. (11/20/14) %%%%%
+@@ -301,7 +298,7 @@ FREAL4      =
+ ifeq ("$(ESMF_COMPILER)","intel")
+   FREAL8      = -r8
+   FREE        =
+-  CPPANSIX    = -ansi -DANSI_CPP 
++  CPPANSIX    = -std=gnu11 -nostdinc -CC
+ else ifeq ("$(ESMF_COMPILER)","gfortran")
+   FREAL8      = -fdefault-real-8 -fdefault-double-8
+   FREE        = -ffree-form -ffree-line-length-none -Wno-line-truncation -fno-range-check
+diff --git a/Shared/MAPL_Base/GNUmakefile b/Shared/MAPL_Base/GNUmakefile
+index 1559f5c..ec0e2c5 100755
+--- a/Shared/MAPL_Base/GNUmakefile
++++ b/Shared/MAPL_Base/GNUmakefile
+@@ -99,19 +99,43 @@ CODE :=  allgather.code           bcast.code             recv.code      \
+          arrayscatter.code        read_parallel.code     sendrecv.code\
+          allreducemin.code        allreducemax.code      allreducesum.code
+ 
+-SRCS :=  ESMFL_Mod.P90            MAPL_HeapMod.F90       MAPL_VarSpecMod.F90\
+-         MAPL_Base.F90            MAPL_InterpMod.F90     hinterp.F\
+-         MAPL_CFIO.F90            MAPL_IO.P90            MAPL_HorzTransform.F90\
+-         MAPL_Comms.P90           MAPL_LocStreamMod.F90  MAPL_Mod.F90\
+-         MAPL_Constants.F90       MAPL_Profiler.F90      sort.c\
+-         MAPL_GenericCplComp.F90  MAPL_Sort.F90\
+-         MAPL_Generic.F90         MAPL_sun_uc.P90        MAPL_SatVapor.F90\
+-         MAPL_HistoryGridComp.F90 MAPL_Cap.F90           hash.c\
++SRCS :=  ESMFL_Mod.P90\
++         MAPL_HeapMod.F90\
++         MAPL_VarSpecMod.F90\
++         MAPL_Base.F90\
++         MAPL_InterpMod.F90\
++         hinterp.F\
++         MAPL_IO.P90\
++         MAPL_HorzTransform.F90\
++         MAPL_Comms.P90\
++         MAPL_LocStreamMod.F90\
++         MAPL_Constants.F90\
++         MAPL_Profiler.F90\
++         sort.c\
++         MAPL_sun_uc.P90\
++         MAPL_GenericCplComp.F90\
++         MAPL_Sort.F90\
++         MAPL_Generic.F90\
++         MAPL_SatVapor.F90\
++         hash.c\
+          c_mapl_locstream_F.c\
+-         memuse.c                 MAPL_MemUtils.F90      MAPL_Hash.F90 \
+-         CubeToLatLon.F90         MAPL_MaxMinMod.F90     MAPL_SimpleBundleMod.F90 \
+-         MAPL_OrbGridCompMod.F90  MAPL_NominalOrbitsMod.F90 MAPL_ExtDataGridCompMod.F90 \
+-         MAPL_NewArthParser.F90   MAPL_ShmemMod.F90      MAPL_LoadBalance.F90 MAPL_CFIOServer.F90
++         memuse.c\
++         MAPL_MemUtils.F90\
++         MAPL_Hash.F90\
++         CubeToLatLon.F90\
++         MAPL_MaxMinMod.F90\
++         MAPL_NominalOrbitsMod.F90\
++         MAPL_NewArthParser.F90\
++         MAPL_ShmemMod.F90\
++         MAPL_LoadBalance.F90\
++         MAPL_CFIOServer.F90\
++         MAPL_CFIO.F90\
++         MAPL_ExtDataGridCompMod.F90\
++         MAPL_SimpleBundleMod.F90\
++         MAPL_HistoryGridComp.F90\
++         MAPL_Cap.F90\
++         MAPL_Mod.F90\
++         MAPL_OrbGridCompMod.F90
+ 
+ SRC_STUBS :=  MAPL_stubs.F90
+ 
