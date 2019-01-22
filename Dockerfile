@@ -66,10 +66,19 @@ RUN wget ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-c-${NC_VERSION}.${NC_VERSI
 &&  make install \
 &&  cd ../.. && rm -rf netcdf-c*
 
+# Build GCHP
 CMD gcc --version \
 &&  g++ --version \
 &&  gfortran --version \
 &&  mpicc --version \
 &&  mpicxx --version \
 &&  mpifort --version \
-&&  /usr/local/bin/nc-config --all 
+&&  nc-config --all \
+&&  git clone https://github.com/LiamBindle/gchp.git \
+&&  cd gchp \
+&&  git checkout $(cat /shared/gchp.version) \
+&&  git apply /shared/gchp.patch \
+&&  /shared/build.sh \
+&&  /shared/package.sh \
+&&  cp gchp-thirdparty.tar.gz /shared
+    
