@@ -122,11 +122,11 @@ RUN curl -L -o ${NF}.tar.gz ftp://ftp.unidata.ucar.edu/pub/netcdf/${NF}.tar.gz \
 &&  make install \
 &&  cd .. && rm -rf netcdf-fortran*
 
+ENV PATH /opt/gcc-${GCC_VERSION}/bin:/opt/${NC}/bin:/opt/${NF}/bin:${PATH}
 
-WORKDIR /src-tmp
-CMD git clone https://github.com/geoschem/gchp.git && cd gchp \
-&&  source /src/vars.rc \
+WORKDIR /src
+CMD git clone https://github.com/geoschem/gchp.git && cd gchp && ln -sf ../vars.rc \
 &&  git checkout $(cat /src/gchp.version) \
 &&  git apply /src/gchp.patch \
-&&  /src/build.sh \
-&&  /src/package.sh gcc 5.4.0 
+&&  source /src/build.sh \
+&&  source /src/package.sh gcc 5.4.0 

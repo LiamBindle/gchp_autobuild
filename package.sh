@@ -2,6 +2,8 @@
 set -e
 set -x
 
+source vars.rc
+
 [ -z $1 ] && echo "No compiler family given" && exit 1
 [ -z $2 ] && echo "No compiler version given" && exit 1
 

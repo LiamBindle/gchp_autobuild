@@ -2,6 +2,15 @@
 set -e
 set -x
 
+echo $PATH
+source vars.rc
+which gcc
+gcc --version
+which g++
+g++ --version
+which gfortran
+gfortran --version
+
 # Build ESMF
 if [ ! -f esmf.install ]; then
 	cd $ESMF_DIR
@@ -14,7 +23,7 @@ fi
 # Build MAPL
 if [ ! -f mapl.install ]; then
 	cd $ESMADIR 
-	make --no-print-directory install 
+	make --no-print-directory install ESMA_FC=gfortran
 	cd ..
 	touch mapl.install 
 fi
@@ -22,7 +31,7 @@ fi
 # Build FVdycore
 if [ ! -f fvdycore.install ]; then
 	cd $FV_DIR
-	make --no-print-directory esma_install 
+	make --no-print-directory esma_install ESMA_FC=gfortran
 	cd ..
 	touch fvdycore.install 
 fi

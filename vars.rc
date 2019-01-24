@@ -6,7 +6,7 @@ export REG_DIR=$(pwd)/Registry
 export ESMF_INSTALL_PREFIX=$ESMADIR/Linux
 
 export ESMF_BOPT=O
-export ESMF_COMPILER=intel
+export ESMF_COMPILER=gfortran
 export ESMF_COMM=openmpi
 export ESMF_OS=Linux
 
@@ -15,4 +15,3 @@ export ESMF_INSTALL_BINDIR=bin
 export ESMF_INSTALL_DOCDIR=doc
 export ESMF_INSTALL_HEADERDIR=include
 export ESMF_INSTALL_MODDIR=include
-
