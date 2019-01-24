@@ -1,0 +1,18 @@
+#!/bin/bash
+set -e
+set -x
+
+
+function usage() {
+	echo "usage: ./buildenv.sh <gcc|intel> < version >"
+}
+
+[ -z $1 ] && usage && exit 1
+[ -z $2 ] && usage && exit 1
+
+FAMILY=$1
+VERSION=$2
+
+docker build --rm -f ${FAMILY}.dockerfile --build-arg GCC_VERSION=${VERSION} -t gchp_buildenv-gcc${VERSION} .
+docker run --rm -v $(pwd):/src --name build_thirdparty-${FAMILY}${VERSION} gchp_buildenv-gcc${VERSION}
+

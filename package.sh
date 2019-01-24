@@ -2,7 +2,8 @@
 set -e
 set -x
 
-source vars.rc
+[ -z $1 ] && echo "No compiler family given" && exit 1
+[ -z $2 ] && echo "No compiler version given" && exit 1
 
 rm -rf pkg pkg.tar.gz
 mkdir pkg
@@ -32,7 +33,8 @@ done
 cp $REG_DIR/*.h pkg/include
 
 cd pkg
-tar -czvf ../gchp-thirdparty.tar.gz .
+tar -czvf ../gchp-thirdparty-${1}${2}.tar.gz .
 cd ..
 
 rm -rf pkg
+
