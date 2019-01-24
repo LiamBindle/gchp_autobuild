@@ -124,9 +124,13 @@ RUN curl -L -o ${NF}.tar.gz ftp://ftp.unidata.ucar.edu/pub/netcdf/${NF}.tar.gz \
 
 ENV PATH /opt/gcc-${GCC_VERSION}/bin:/opt/${NC}/bin:/opt/${NF}/bin:${PATH}
 
-WORKDIR /src
-CMD git clone https://github.com/geoschem/gchp.git && cd gchp && ln -sf ../vars.rc \
+WORKDIR /src-tmp
+CMD git clone https://github.com/geoschem/gchp.git \
+&&  cd gchp \
+&&  ln -sf /src/vars.rc \
 &&  git checkout $(cat /src/gchp.version) \
 &&  git apply /src/gchp.patch \
 &&  source /src/build.sh \
-&&  source /src/package.sh gcc 5.4.0 
+&&  source /src/package.sh gcc ${GCC_VERSION} \
+&&  cp gchp_thirdparty-gcc${GCC_VERSION}.tar.gz /src/ \
+&&  chmod 666 /src/gchp_thirdparty-gcc${GCC_VERSION}.tar.gz

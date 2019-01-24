@@ -2,14 +2,7 @@
 set -e
 set -x
 
-echo $PATH
 source vars.rc
-which gcc
-gcc --version
-which g++
-g++ --version
-which gfortran
-gfortran --version
 
 # Build ESMF
 if [ ! -f esmf.install ]; then

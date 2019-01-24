@@ -14,5 +14,5 @@ FAMILY=$1
 VERSION=$2
 
 docker build --rm -f ${FAMILY}.dockerfile --build-arg GCC_VERSION=${VERSION} -t gchp_buildenv-gcc${VERSION} .
-docker run --rm -v $(pwd):/src --name build_thirdparty-${FAMILY}${VERSION} gchp_buildenv-gcc${VERSION}
+docker run --rm -v $(pwd):/src -e GCC_VERSION=${VERSION} --name build_thirdparty-${FAMILY}${VERSION} gchp_buildenv-gcc${VERSION}
 

@@ -35,7 +35,7 @@ done
 cp $REG_DIR/*.h pkg/include
 
 cd pkg
-tar -czvf ../gchp-thirdparty-${1}${2}.tar.gz .
+tar -czpvf ../gchp_thirdparty-${1}${2}.tar.gz .
 cd ..
 
 rm -rf pkg
