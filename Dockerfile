@@ -10,9 +10,9 @@ ENV srcdir /src/gcc-${GCC_VERSION}
 # Download GCC
 WORKDIR /src
 RUN yum install -y wget bzip2 \
-&&  wget https://mirror.its.dal.ca/gnu/gcc/gcc-${GCC_VERSION}/gcc-${GCC_VERSION}.tar.bz2 \
-&&  tar -xvf gcc-${GCC_VERSION}.tar.bz2 \
-&&  rm gcc-${GCC_VERSION}.tar.bz2
+&&  wget https://mirror.its.dal.ca/gnu/gcc/gcc-${GCC_VERSION}/gcc-${GCC_VERSION}.tar.gz \
+&&  tar -xvf gcc-${GCC_VERSION}.tar.gz \
+&&  rm gcc-${GCC_VERSION}.tar.gz
 
 # Install GCC prerequisites
 WORKDIR ${srcdir}
